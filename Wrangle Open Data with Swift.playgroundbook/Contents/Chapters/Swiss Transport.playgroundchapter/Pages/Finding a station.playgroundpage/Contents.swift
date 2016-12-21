@@ -10,7 +10,7 @@ public var stationListURL = URL(string: "https://opentransportdata.swiss/api/act
 /*:
  You can filter this list by providing a search term, like a station or place name
  */
-var stopName = /*#-editable-code Olten*/""/*#-end-editable-code*/
+var stationName = /*#-editable-code Olten*/"Olten"/*#-end-editable-code*/
 extension URL {
     mutating func add(stationName: String) {
         let queryItem = URLQueryItem(name: "q", value: stationName)
@@ -22,7 +22,7 @@ extension URL {
     }
 }
 
-stationListURL.add(stationName: stopName)
+stationListURL.add(stationName: stationName)
 /*:
  The response from the service will look something along the lines of this (**Explain CKAN?**)
  
