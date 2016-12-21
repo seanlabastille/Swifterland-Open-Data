@@ -24,6 +24,7 @@ extension URL {
 }
 
 stationListURL.add(stationName: stationName)
+//#-end-editable-code
 /*:
  The response from the service will look something along the lines of this (**Explain CKAN?**)
  
@@ -66,6 +67,7 @@ stationListURL.add(stationName: stationName)
  So we will need to traverse the response object, the result object and the records array and transform its elements.
  
  */
+//#-editable-code
 struct Response<R: Record> {
     let help: String
     let success: Bool
@@ -90,6 +92,7 @@ struct Result<R: Record> {
         records = recordJSON.flatMap(R.init)
     }
 }
+//#-end-editable-code
 /*:
  Notice that the response and result have a generic parameter for the record type they contain.
  For now all we really want a record to require is having an initializer accepting JSON.
@@ -100,6 +103,7 @@ protocol Record {
 /*:
  All this boilerplate brings us to what we actually want, a station, which is a specific kind of record.
  */
+//#-editable-code
 struct Station: Record, CustomDebugStringConvertible {
     let station: String
     let stationID: String
@@ -117,9 +121,11 @@ struct Station: Record, CustomDebugStringConvertible {
         }
     }
 }
+//#-end-editable-code
 /*:
  Let's prepare a task for requesting the list with the URL we prepared earlier, unpack the JSON and try reading the response, assuming that it contains stations.
  */
+//#-editable-code
 let stationListTask = URLSession.shared.dataTask(with: stationListURL) { (data, response, error) in
     guard error == nil, let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as AnyObject else { error; return }
     if let response = Response<Station>(json: json) {
