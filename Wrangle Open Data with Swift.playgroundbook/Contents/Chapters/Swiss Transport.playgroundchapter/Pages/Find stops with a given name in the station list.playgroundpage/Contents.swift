@@ -4,7 +4,7 @@ import Foundation
 //#-hidden-code
 import PlaygroundSupport
 PlaygroundPage.current.needsIndefiniteExecution = true
-//#end-hidden-code
+//#-end-hidden-code
 
 protocol Record {
     init?(json: Any)
