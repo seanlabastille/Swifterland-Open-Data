@@ -4,13 +4,12 @@
 <dict>
 	<key>ContentVersion</key>
 	<string>1.0</string>
+	<key>LiveViewEdgeToEdge</key>
+	<true/>
+	<key>LiveViewMode</key>
+	<string>HiddenByDefault</string>
 	<key>Name</key>
-	<string>Swiss Transport</string>
-	<key>Pages</key>
-	<array>
-		<string>Explore the Swiss Public Transport Open Data Platform.playgroundpage</string>
-		<string>Finding a station.playgroundpage</string>
-	</array>
+	<string>Finding a station</string>
 	<key>Version</key>
 	<string>1.0</string>
 </dict>

@@ -4,6 +4,7 @@ import Foundation
 import PlaygroundSupport
 import SafariServices
 
+public let openDataURL = URL(string: "https://opentransportdata.swiss/")!
 let safariViewController = SFSafariViewController(url: openDataURL)
 PlaygroundPage.current.liveView = safariViewController
 /*:
