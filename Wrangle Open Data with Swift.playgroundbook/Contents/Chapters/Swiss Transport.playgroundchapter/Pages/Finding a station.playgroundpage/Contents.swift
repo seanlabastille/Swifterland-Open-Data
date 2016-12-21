@@ -11,7 +11,7 @@ public var stationListURL = URL(string: "https://opentransportdata.swiss/api/act
  You can filter this list by providing a search term, like a station or place name
  */
 var stationName = /*#-editable-code*/"Olten"/*#-end-editable-code*/
-/*#-editable-code*/
+//#-editable-code
 extension URL {
     mutating func add(stationName: String) {
         let queryItem = URLQueryItem(name: "q", value: stationName)
@@ -128,4 +128,4 @@ let stationListTask = URLSession.shared.dataTask(with: stationListURL) { (data, 
     }
 }
 stationListTask.resume()
-/*#-end-editable-code*/
+//#-end-editable-code
