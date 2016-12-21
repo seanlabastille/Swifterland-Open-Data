@@ -10,7 +10,7 @@ public var stationListURL = URL(string: "https://opentransportdata.swiss/api/act
 /*:
  You can filter this list by providing a search term, like a station or place name
  */
-var stationName = /*#-editable-code Olten*/"Olten"/*#-end-editable-code*/
+var stationName = /*#-editable-code*/"Olten"/*#-end-editable-code*/
 extension URL {
     mutating func add(stationName: String) {
         let queryItem = URLQueryItem(name: "q", value: stationName)
@@ -70,10 +70,11 @@ struct Response<R: Record> {
     let success: Bool
     let result: Result<R>
 
-    init?(json: Any) {
-        guard let help = (json as AnyObject).value(forKey: "help") as? String,
-            let success = (json as AnyObject).value(forKey: "success") as? Bool,
-            let result = Result<R>(json: (json as AnyObject).value(forKey: "result") as Any) else { return nil }
+    init?(json: AnyObject) {
+        guard let help = json.value(forKey: "help") as? String,
+            let success = json.value(forKey: "success") as? Bool,
+            let resultObject = json.value(forKey: "result") as? AnyObject,
+            let result = Result<R>(json: resultObject) else { return nil }
         self.help = help
         self.success = success
         self.result = result
@@ -83,8 +84,8 @@ struct Response<R: Record> {
 struct Result<R: Record> {
     let records: [R]
 
-    init?(json: Any) {
-        guard let recordJSON = (json as AnyObject).value(forKey: "records") as? [AnyObject] else { return nil }
+    init?(json: AnyObject) {
+        guard let recordJSON = json.value(forKey: "records") as? [AnyObject] else { return nil }
         records = recordJSON.flatMap(R.init)
     }
 }
@@ -93,7 +94,7 @@ struct Result<R: Record> {
  For now all we really want a record to require is having an initializer accepting JSON.
  */
 protocol Record {
-    init?(json: Any)
+    init?(json: AnyObject)
 }
 /*:
  All this boilerplate brings us to what we actually want, a station, which is a specific kind of record.
@@ -102,9 +103,9 @@ struct Station: Record, CustomDebugStringConvertible {
     let station: String
     let stationID: String
 
-    init?(json: Any) {
-        guard let station = (json as AnyObject).value(forKey: "Station") as? String,
-            let stationID = (json as AnyObject).value(forKey: "StationID") as? String else { return nil }
+    init?(json: AnyObject) {
+        guard let station = json.value(forKey: "Station") as? String,
+            let stationID = json.value(forKey: "StationID") as? String else { return nil }
         self.station = station
         self.stationID = stationID
     }
@@ -119,7 +120,7 @@ struct Station: Record, CustomDebugStringConvertible {
  Let's prepare a task for requesting the list with the URL we prepared earlier, unpack the JSON and try reading the response, assuming that it contains stations.
  */
 let stationListTask = URLSession.shared.dataTask(with: stationListURL) { (data, response, error) in
-    guard error == nil, let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) else { error; return }
+    guard error == nil, let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as AnyObject else { error; return }
     if let response = Response<Station>(json: json) {
         response.success
         response.result.records
