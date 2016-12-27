@@ -1,6 +1,29 @@
 //#-hidden-code
 import Foundation
 //#-end-hidden-code
+//#-hidden-code
+extension AEXMLDocument {
+    func tree() -> [String: Any] {
+        var tree = [String: Any]()
+        tree = self.tree(parent: self, depth: 0, result: tree)
+        return tree
+    }
+
+    private func tree(parent: AEXMLElement, depth: Int, result: [String: Any]) -> [String: Any] {
+        var result = [String: Any]()
+
+        parent.children.forEach { (element) in
+            if element.children.count == 0 {
+                result[element.name] = element.value
+            } else {
+                result[element.name] = tree(parent: element, depth: depth+1, result: result)
+            }
+        }
+        return result
+    }
+}
+//#-end-hidden-code
+
 let requestDocument = AEXMLDocument()
 let trias = requestDocument.addChild(name: "Trias", value: nil, attributes: ["version":"1.1", "xmlns":"http://www.vdv.de/trias", "xmlns:siri":"http://www.siri.org.uk/siri", "xmlns:xsi":"http://www.w3.org/2001/XMLSchema-instance"])
 let serviceRequest = trias.addChild(name: "ServiceRequest")
@@ -28,7 +51,7 @@ let task = URLSession.shared.dataTask(with: request, completionHandler: { (data,
         json
     }
     if let document = try? AEXMLDocument(xml: data!) {
-        print(document.tree())
+        document.tree()
         document["Trias"]["ServiceDelivery"].first?.children.map { $0.xml }
         document["Trias"]["ServiceDelivery"]["DeliveryPayload"]["StopEventResponse"]["StopEventResult"]["StopEvent"]["Service"].first?.children.map { $0.xml }
     }
@@ -40,27 +63,3 @@ let task = URLSession.shared.dataTask(with: request, completionHandler: { (data,
     }
 })
 task.resume()
-
-extension AEXMLDocument {
-    func tree() -> String {
-        var tree = ""
-        tree = self.tree(parent: self, depth: 0, result: tree)
-        return tree
-    }
-
-    private func tree(parent: AEXMLElement, depth: Int, result: String) -> String {
-        var result = result
-
-        parent.children.forEach { (element) in
-            if element.children.count == 0 {
-                (0...depth-1).forEach { _ in result.append("-") }
-                result.append("┫ \(element.name)\n")
-            } else {
-                (0..<depth).forEach { _ in result.append("-") }
-                result.append("┳\(element.name)\n")
-                result = tree(parent: element, depth: depth+1, result: result)
-            }
-        }
-        return result
-    }
-}

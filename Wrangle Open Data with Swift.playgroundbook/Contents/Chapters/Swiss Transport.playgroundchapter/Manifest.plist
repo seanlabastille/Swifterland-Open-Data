@@ -10,6 +10,7 @@
 	<array>
 		<string>Explore the Swiss Public Transport Open Data Platform.playgroundpage</string>
 		<string>Finding a station.playgroundpage</string>
+		<string>Requesting departure boards.playgroundpage</string>
 	</array>
 	<key>Version</key>
 	<string>1.0</string>
