@@ -135,3 +135,7 @@ let stationListTask = URLSession.shared.dataTask(with: stationListURL) { (data, 
 }
 stationListTask.resume()
 //#-end-editable-code
+
+let document = try? AEXMLDocument(xml: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+    "<Trias version=\"1.1\" xmlns=\"http://www.vdv.de/trias\" xmlns:siri=\"http://www.siri.org.uk/siri\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
+    "<ServiceRequest></ServiceRequest></Trias>").children.first?.attributes
