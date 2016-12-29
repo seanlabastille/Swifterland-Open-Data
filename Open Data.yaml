@@ -1,0 +1,13 @@
+name: Wrangle Open Data with Swift
+identifier: li.lsr.playground.OpenData
+# resources
+# cover
+imports:
+ - Foundation
+chapters:
+  - name: Swiss Transport
+#   edge_to_edge_live_view: false
+#   live_view_mode: "VisibleByDefault"
+  - name: Stadt Zürich
+glossay:
+  API: Application Programming Interface
