@@ -8,6 +8,6 @@ chapters:
   - name: Swiss Transport
 #   edge_to_edge_live_view: false
 #   live_view_mode: "VisibleByDefault"
-  - name: Stadt Zürich
+#  - name: Stadt Zürich
 glossay:
   API: Application Programming Interface

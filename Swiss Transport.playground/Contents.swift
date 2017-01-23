@@ -190,10 +190,11 @@ extension AEXMLDocument {
 }
 //#-end-hidden-code
 
+let iso8601Now = ISO8601DateFormatter().string(from: Date())
 let requestDocument = AEXMLDocument()
 let trias = requestDocument.addChild(name: "Trias", value: nil, attributes: ["version":"1.1", "xmlns":"http://www.vdv.de/trias", "xmlns:siri":"http://www.siri.org.uk/siri", "xmlns:xsi":"http://www.w3.org/2001/XMLSchema-instance"])
 let serviceRequest = trias.addChild(name: "ServiceRequest")
-let requestTimestamp = serviceRequest.addChild(name: "siri:RequestTimestamp", value: "2016-12-27T11:50:50", attributes: [:])
+let requestTimestamp = serviceRequest.addChild(name: "siri:RequestTimestamp", value: iso8601Now, attributes: [:])
 let requestorRef = serviceRequest.addChild(name: "siri:RequestorRef")
 let requestPayload = serviceRequest.addChild(name: "RequestPayload")
 let stopEventRequest = requestPayload.addChild(name: "StopEventRequest")
@@ -201,7 +202,7 @@ let location = stopEventRequest.addChild(name: "Location")
 let params = stopEventRequest.addChild(name: "Params")
 let locationRef = location.addChild(name: "LocationRef")
 let stopPointRef = locationRef.addChild(name: "StopPointRef", value: "8591391", attributes: [:])
-let depArrTime = location.addChild(name: "DepArrTime", value: "2016-12-10T10:10:10", attributes: [:])
+let depArrTime = location.addChild(name: "DepArrTime", value: iso8601Now, attributes: [:])
 let numberOfResults = params.addChild(name: "NumberOfResults", value: "30", attributes: [:])
 requestDocument.xml
 

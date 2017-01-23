@@ -5,7 +5,6 @@
 	<key>Chapters</key>
 	<array>
 		<string>Swiss Transport.playgroundchapter</string>
-		<string>Stadt Zürich.playgroundchapter</string>
 	</array>
 	<key>ContentIdentifier</key>
 	<string>li.lsr.playground.OpenData</string>
