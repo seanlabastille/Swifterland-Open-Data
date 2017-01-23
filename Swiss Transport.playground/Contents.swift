@@ -168,6 +168,9 @@ stationListTask.resume()
 //// Requesting departure boards
 
 //#-hidden-code
+import PlaygroundSupport
+PlaygroundPage.current.needsIndefiniteExecution = true
+
 extension AEXMLDocument {
     func tree() -> [String: Any] {
         var tree = [String: Any]()
